@@ -37,8 +37,8 @@
   import BackTop from 'components/content/backTop/BackTop'
 
   import {getHomeMultidata,getHomeGoods} from 'network/home'
-  // import {debounce} from 'common/utils'
-  import {itemListenerMixin} from 'common/mixin'
+  import {debounce} from 'common/utils'
+  // import {itemListenerMixin} from 'common/mixin'
   
   export default {
     name: "Home",
@@ -53,7 +53,7 @@
       BackTop
       
     },
-    mixins: [itemListenerMixin],
+    // mixins: [itemListenerMixin],
     data(){
       return{
         banners: [],
@@ -83,8 +83,8 @@
       //保存Y值
       this.saveY = this.$refs.scroll.getScrollY()
 
-      //取消全局事件的监听
-      this.$bus.$off('itemImgLoad', this.itemImgListener)
+      //若使用mixin，取消全局事件的监听
+      // this.$bus.$off('itemImageLoad', this.itemImgListener)
     },
     created() {
       //1.请求多个数据
@@ -97,13 +97,12 @@
 
     },
     mounted() {
-
-      // 下方代码被封装到mixin中了
-      // //1.监听item图片加载完成
-      // const refresh = debounce(this.$refs.scroll.refresh, 50)
-      // this.$bus.$on('itemImageLoad',() => {
-      //   refresh()
-      // })
+      //下方代码被封装到mixin中了
+      //1.监听item图片加载完成
+      const refresh = debounce(this.$refs.scroll.refresh, 50)
+      this.$bus.$on('itemImageLoad',() => {
+      refresh()
+      })
     },
     methods: {
       //事件监听相关方法

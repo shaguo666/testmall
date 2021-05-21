@@ -25,7 +25,7 @@ import DetailCommentInfo from './childComps/DetailCommentInfo'
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
 
-import {itemListenerMixin} from 'common/mixin'
+// import {itemListenerMixin} from 'common/mixin'
 import {getDetail, Goods, Shop, GoodsParam, getRecommend} from "network/detail"
 
 
@@ -44,7 +44,7 @@ export default {
         DetailParamInfo,
         DetailCommentInfo
     },
-    mixins: [itemListenerMixin],
+    // mixins: [itemListenerMixin],
     data() {
         return {
             iid: null,
@@ -86,15 +86,13 @@ export default {
             if(data.rate.cRate !== 0){
                 this.commentInfo = data.rate.list[0] 
             }
+
         })
 
         //3.请求推荐数据
         getRecommend().then(res => {
             this.recommends = res.data.list
         })
-    },
-    destroyed() {
-        this.$bus.$off('itemImgLoad', this.itemImgListener)
     },
     methods: {
         imageLoad() {
